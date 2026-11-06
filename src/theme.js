@@ -4,7 +4,9 @@ const theme = {
     textSecondary: '#586069',
     textOnDark: 'white',
     primary: '#0366d6',
-    background: '#24292e',
+    darkbackground: '#24292e',
+    mainBackground: '#e1e4e8',
+    itemBackground: 'white',
   },
   fontSizes: {
     body: 14,

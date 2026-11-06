@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     padding: 16,
     gap: 16,
+    backgroundColor: theme.colors.itemBackground,
   },
   infoContainer: {
     flexDirection: "row",
