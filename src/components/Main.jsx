@@ -1,5 +1,6 @@
 import Constants from 'expo-constants';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import Text from './Text';
 import RepositoryList from './RepositoryList';
 
 const styles = StyleSheet.create({
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
 const Main = () => {
   return (
     <View style={styles.container}>
-      <Text>Rate Repository Application</Text>
+      <Text fontSize="subheading" fontWeight="bold" color="primary">Rate Repository Application</Text>
       <RepositoryList />
     </View>
   );
