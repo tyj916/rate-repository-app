@@ -1,8 +1,16 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  avatar: {
+    height: 50,
+    width: 50,
+  }
+});
 
 const RepositoryItem = ({ item }) => {
   return (
     <View>
+      <Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }}/>
       <Text>Full name: {item.fullName}</Text>
       <Text>Description: {item.description}</Text>
       <Text>Language: {item.language}</Text>
