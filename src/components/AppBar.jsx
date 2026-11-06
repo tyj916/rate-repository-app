@@ -1,7 +1,7 @@
-import { View, StyleSheet, Pressable, Alert } from 'react-native';
-import Text from './Text';
+import { View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
+import AppBarTab from './AppBarTab';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,9 +14,7 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   return <View style={styles.container}>
-    <Pressable onPress={() => Alert.alert("Repositories")}>
-      <Text variant="subheading" color="onDark">Repositories</Text>
-    </Pressable>
+    <AppBarTab text="Repositories" />
   </View>;
 };
 
