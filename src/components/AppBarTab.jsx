@@ -4,8 +4,6 @@ import Text from "./Text";
 
 const styles = StyleSheet.create({
   link: {
-    flex: 1,
-    alignItems: "center",
     padding: 16,
   },
 });
