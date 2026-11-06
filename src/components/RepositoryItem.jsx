@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
   countsContainer: {
     flexDirection: "row",
   },
+  countItem: {
+    flex: 1,
+    alignItems: "center"
+  },
   avatar: {
     height: 50,
     width: 50,
@@ -33,6 +37,19 @@ const styles = StyleSheet.create({
   },
 });
 
+const CountItem = ({ text, count }) => {
+  const countView = count > 1000 
+    ? parseFloat(Number(count / 1000).toFixed(1)) + 'k' 
+    : count;
+
+  return (
+    <View style={styles.countItem}>
+      <Text fontWeight="bold">{countView}</Text>
+      <Text color="textSecondary">{text}</Text>
+    </View>
+  );
+};
+
 const RepositoryItem = ({ item }) => {
   return (
     <View style={styles.itemContainer}>
@@ -45,10 +62,10 @@ const RepositoryItem = ({ item }) => {
         </View>
       </View>
       <View style={styles.countsContainer}>
-        <Text>Stars: {item.stargazersCount}</Text>
-        <Text>Forks: {item.forksCount}</Text>
-        <Text>Reviews: {item.reviewCount}</Text>
-        <Text>Rating: {item.ratingAverage}</Text>
+        <CountItem text="Stars" count={item.stargazersCount} />
+        <CountItem text="Forks" count={item.forksCount} />
+        <CountItem text="Reviews" count={item.reviewCount} />
+        <CountItem text="Rating" count={item.ratingAverage} />
       </View>
     </View>
   );
