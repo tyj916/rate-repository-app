@@ -7,6 +7,7 @@ const theme = {
     darkbackground: '#24292e',
     mainBackground: '#e1e4e8',
     itemBackground: 'white',
+    error: 'red',
   },
   fontSizes: {
     body: 14,
