@@ -4,7 +4,6 @@ import AppBarTab from './AppBarTab';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     backgroundColor: theme.colors.darkbackground,
   },  
 });
