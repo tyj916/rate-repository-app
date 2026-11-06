@@ -1,11 +1,11 @@
-import { Pressable } from "react-native";
+import { Link } from "react-router-native";
 import Text from "./Text";
 
 const AppBarTab = ({ text, navigateTo }) => {
   return (
-    <Pressable onPress={navigateTo}>
+    <Link to={navigateTo}>
       <Text variant="subheading" color="onDark">{text}</Text>
-    </Pressable>
+    </Link>
   );
 };
 
