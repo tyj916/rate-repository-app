@@ -5,6 +5,7 @@ import theme from "../theme";
 const styles = StyleSheet.create({
   itemContainer: {
     padding: 16,
+    gap: 16,
   },
   infoContainer: {
     flexDirection: "row",
