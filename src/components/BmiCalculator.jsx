@@ -7,7 +7,6 @@ import theme from '../theme';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: theme.colors.itemBackground,
     justifyContent: "center",
     gap: 16,
