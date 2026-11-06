@@ -1,4 +1,6 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
+import Text from "./Text";
+import theme from "../theme";
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -8,13 +10,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 16,
   },
+  detailsContainer: {
+    flex: 1,
+    flexShrink: 1,
+    alignItems: "flex-start",
+    gap: 4,
+  },
   countsContainer: {
     flexDirection: "row",
   },
   avatar: {
     height: 50,
     width: 50,
-  }
+    borderRadius: 4,
+  },
+  languageTag: {
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.textOnDark,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+  },
 });
 
 const RepositoryItem = ({ item }) => {
@@ -22,10 +38,10 @@ const RepositoryItem = ({ item }) => {
     <View style={styles.itemContainer}>
       <View style={styles.infoContainer}>
         <Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }}/>
-        <View>
-          <Text>Full name: {item.fullName}</Text>
-          <Text>Description: {item.description}</Text>
-          <Text>Language: {item.language}</Text>
+        <View style={styles.detailsContainer}>
+          <Text fontWeight="bold">{item.fullName}</Text>
+          <Text color="textSecondary">{item.description}</Text>
+          <Text style={styles.languageTag}>{item.language}</Text>
         </View>
       </View>
       <View style={styles.countsContainer}>
