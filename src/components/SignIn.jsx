@@ -1,6 +1,7 @@
 import { View, StyleSheet, TextInput, Pressable } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
+import { useFormik } from "formik";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,19 +24,33 @@ const styles = StyleSheet.create({
   }
 });
 
-const SignInForm = () => {
+const initialValues = {
+  username: '',
+  password: '',
+};
+
+const SignInForm = ({ onSubmit }) => {
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+  });
+
   return (
     <View style={styles.formContainer}>
       <TextInput 
         placeholder="Username"
+        value={formik.values.username}
+        onChangeText={formik.handleChange('username')}
         style={styles.field}
       />
       <TextInput 
         placeholder="Password"
+        value={formik.values.password}
+        onChangeText={formik.handleChange('password')}
         secureTextEntry
         style={styles.field}
       />
-      <Pressable style={styles.button}>
+      <Pressable onPress={formik.handleSubmit} style={styles.button}>
         <Text color="onDark">Sign in</Text>
       </Pressable>
     </View>
@@ -43,9 +58,15 @@ const SignInForm = () => {
 };
 
 const SignIn = () => {
+  const onSubmit = ({ username, password}) => {
+    if (username && password) {
+      console.log(`login as ${username}`);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <SignInForm />
+      <SignInForm onSubmit={onSubmit} />
     </View>
   );
 };
