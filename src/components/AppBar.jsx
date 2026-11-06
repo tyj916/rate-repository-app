@@ -13,6 +13,7 @@ const AppBar = () => {
     <ScrollView horizontal>
       <AppBarTab text="Repositories" navigateTo="/" />
       <AppBarTab text="Sign In" navigateTo="/signIn" />
+      <AppBarTab text="BMI" navigateTo="/bmiCalculator" />
     </ScrollView>
   </View>;
 };
