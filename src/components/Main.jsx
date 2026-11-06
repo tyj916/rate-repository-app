@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 const Main = () => {
   return (
     <View style={styles.container}>
-      <Text fontSize="subheading" fontWeight="bold" color="primary">Rate Repository Application</Text>
+      <Text variant="subheading" color="primary">Rate Repository Application</Text>
       <RepositoryList />
     </View>
   );
