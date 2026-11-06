@@ -25,6 +25,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const fieldWithError = [
+  styles.field,
+  {
+    borderColor: theme.colors.error,
+  },
+]
+
 const initialValues = {
   username: '',
   password: '',
@@ -48,6 +55,9 @@ const SignInForm = ({ onSubmit }) => {
     onSubmit,
   });
 
+  const usernameHasError = formik.touched.username && formik.errors.username;
+  const passwordHasError = formik.touched.password && formik.errors.password;
+
   return (
     <View style={styles.formContainer}>
       <TextInput 
@@ -55,9 +65,9 @@ const SignInForm = ({ onSubmit }) => {
         value={formik.values.username}
         onChangeText={formik.handleChange('username')}
         onBlur={formik.handleBlur('username')}
-        style={styles.field}
+        style={usernameHasError ? fieldWithError : styles.field}
       />
-      {formik.touched.username && formik.errors.username && (
+      {usernameHasError && (
         <Text color="error">{formik.errors.username}</Text>
       )}
       <TextInput 
@@ -66,9 +76,9 @@ const SignInForm = ({ onSubmit }) => {
         onChangeText={formik.handleChange('password')}
         onBlur={formik.handleBlur('password')}
         secureTextEntry
-        style={styles.field}
+        style={passwordHasError ? fieldWithError: styles.field}
       />
-      {formik.touched.password && formik.errors.password && (
+      {passwordHasError && (
         <Text color="error">{formik.errors.password}</Text>
       )}
       <Pressable onPress={formik.handleSubmit} style={styles.button}>
