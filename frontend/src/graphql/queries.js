@@ -13,6 +13,7 @@ export const GET_REPOSITORIES = gql`
           forksCount
           ownerAvatarUrl
           description
+          language
         }
       }
     }
