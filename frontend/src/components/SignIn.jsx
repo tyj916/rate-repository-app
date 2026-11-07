@@ -3,6 +3,7 @@ import Text from "./Text";
 import theme from "../theme";
 import { useFormik } from "formik";
 import * as yup from 'yup';
+import useSignIn from "../hooks/useSignIn";
 
 const styles = StyleSheet.create({
   container: {
@@ -89,9 +90,14 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
-  const onSubmit = ({ username, password}) => {
-    if (username && password) {
-      console.log(`login as ${username}`);
+  const [signIn] = useSignIn();
+
+  const onSubmit = async ({ username, password}) => {
+    try {
+      const { data } = await signIn({ username, password });
+      console.log(data);
+    } catch (e) {
+      console.log(e);
     }
   };
 
