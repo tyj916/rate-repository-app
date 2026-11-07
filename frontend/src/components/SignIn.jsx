@@ -98,7 +98,7 @@ const SignIn = () => {
       const { data } = await signIn({ username, password });
 
       if (data.authenticate.accessToken) {
-        const authStorage = new AuthStorage('authStorage');
+        const authStorage = new AuthStorage();
         await authStorage.setAccessToken(data.authenticate.accessToken);
       }
     } catch (e) {
