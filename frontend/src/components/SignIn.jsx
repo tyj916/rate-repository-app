@@ -4,6 +4,7 @@ import theme from "../theme";
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import useSignIn from "../hooks/useSignIn";
+import AuthStorage from "../utils/authStorage";
 
 const styles = StyleSheet.create({
   container: {
@@ -95,7 +96,11 @@ const SignIn = () => {
   const onSubmit = async ({ username, password}) => {
     try {
       const { data } = await signIn({ username, password });
-      console.log(data);
+
+      if (data.authenticate.accessToken) {
+        const authStorage = new AuthStorage('authStorage');
+        await authStorage.setAccessToken(data.authenticate.accessToken);
+      }
     } catch (e) {
       console.log(e);
     }
