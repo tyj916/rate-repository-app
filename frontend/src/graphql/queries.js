@@ -6,21 +6,13 @@ export const GET_REPOSITORIES = gql`
       edges {
         node {
           id
-          ownerName
-          name
-          createdAt
           fullName
           ratingAverage
           reviewCount
           stargazersCount
-          watchersCount
           forksCount
-          openIssuesCount
-          url
           ownerAvatarUrl
           description
-          language
-          userHasReviewed
         }
       }
     }
