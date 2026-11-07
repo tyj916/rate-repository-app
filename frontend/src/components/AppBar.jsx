@@ -3,6 +3,7 @@ import Constants from 'expo-constants';
 import theme from '../theme';
 import AppBarTab from './AppBarTab';
 import useMe from '../hooks/useMe';
+import SignOut from './SignOut';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +19,7 @@ const AppBar = () => {
     <ScrollView horizontal>
       <AppBarTab text="Repositories" navigateTo="/" />
       {!me && <AppBarTab text="Sign In" navigateTo="/signIn" />}
-      {me && <AppBarTab text="Sign Out" navigateTo="/" />}
+      {me && <SignOut />}
       <AppBarTab text="BMI" navigateTo="/bmiCalculator" />
     </ScrollView>
   </View>;
