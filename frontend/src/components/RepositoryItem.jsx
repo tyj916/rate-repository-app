@@ -54,7 +54,7 @@ const CountItem = ({ text, count }) => {
 
 const RepositoryItem = ({ item }) => {
   return (
-    <View style={styles.itemContainer}>
+    <View testID="repositoryItem" style={styles.itemContainer}>
       <View style={styles.infoContainer}>
         <Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }}/>
         <View style={styles.detailsContainer}>
