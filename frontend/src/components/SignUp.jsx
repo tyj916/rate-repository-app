@@ -49,11 +49,13 @@ const SignUpForm = ({ onSubmit }) => {
         formik={formik}
         name="password"
         placeholder='Password'
+        secureTextEntry
       />
       <FormikTextInput
         formik={formik}
         name="passwordConfirmation" 
         placeholder='Password confirmation'
+        secureTextEntry
       />
       <Pressable onPress={formik.handleSubmit}>
         <Text style={styles.submitButton}>Sign up</Text>
