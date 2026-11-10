@@ -70,24 +70,10 @@ const ReviewItem = ({ review }) => {
   );
 };
 
-const Repository = () => {
-  const { id } = useParams();
-
-  const result = useQuery(GET_REPOSITORY_DETAILS, {
-    variables: { repositoryId: id },
-    fetchPolicy: 'cache-and-network',
-  });
-
+const RepositoryView = ({ repository }) => {
   const handleNavigate = (url) => {
     Linking.openURL(url);
   };
-
-  if (result.loading) {
-    return <Text>Loading...</Text>
-  }
-
-  const repository = result.data.repository;
-  const reviews = repository ? repository.reviews.edges.map(edge => edge.node) : [];
 
   return (
     <View>
@@ -97,13 +83,34 @@ const Repository = () => {
           <Text style={styles.buttonText}>Open in GitHub</Text>
         </Pressable>
       </View>
-      <FlatList 
-        data={reviews}
-        renderItem={({ item }) => <ReviewItem review={item} />}
-        ItemSeparatorComponent={ItemSeparator}
-        keyExtractor={({ id }) => id}
-      />
     </View>
+  );
+}
+
+const Repository = () => {
+  const { id } = useParams();
+
+  const result = useQuery(GET_REPOSITORY_DETAILS, {
+    variables: { repositoryId: id },
+    fetchPolicy: 'cache-and-network',
+  });
+
+  if (result.loading) {
+    return <Text>Loading...</Text>
+  }
+
+  const repository = result.data.repository;
+  const reviews = repository ? repository.reviews.edges.map(edge => edge.node) : [];
+
+  return (
+    <FlatList 
+      data={reviews}
+      renderItem={({ item }) => <ReviewItem review={item} />}
+      keyExtractor={({ id }) => id}
+      ListHeaderComponent={() => <RepositoryView repository={repository} />}
+      ListHeaderComponentStyle={{ marginBottom: 10 }}
+      ItemSeparatorComponent={ItemSeparator}
+    />
   );
 };
 
