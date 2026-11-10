@@ -152,13 +152,17 @@ const CreateReview = () => {
   };
 
   const onSubmit = async ({ ownerName, repositoryName, rating, review }) => {
-    const data = await createReview({ 
-      ownerName, 
-      repositoryName, 
-      rating: parseInt(rating), 
-      text: review 
-    });
-    console.log(data);
+    try {
+      const data = await createReview({ 
+        ownerName, 
+        repositoryName, 
+        rating: parseInt(rating), 
+        text: review 
+      });
+      navigate(`/repositories/${data.createReview.repositoryId}`);
+    } catch (e) {
+      console.error(e);
+    };
   };
   
   return <ReviewForm onSubmit={onSubmit} />
