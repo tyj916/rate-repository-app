@@ -1,11 +1,12 @@
-import { View, TextInput, Pressable } from "react-native";
+import { View, Pressable } from "react-native";
 import Text from "./Text";
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-native";
 import { useMutation } from "@apollo/client/react";
 import { CREATE_REVIEW } from "../graphql/mutations";
-import styles, { fieldWithError } from "../utils/formStyles";
+import styles from "../utils/formStyles";
+import FormikTextInput from "./FormikTextInput";
 
 const initialValues = {
   ownerName: '',
@@ -37,63 +38,29 @@ const ReviewForm = ({ onSubmit }) => {
     onSubmit,
   });
 
-  const ownerNameHasError = formik.touched.ownerName && formik.errors.ownerName;
-  const repositoryNameHasError = formik.touched.repositoryName && formik.errors.repositoryName;
-  const ratingHasError = formik.touched.rating && formik.errors.rating;
-  const reviewHasError = formik.touched.review && formik.errors.review;
-
   return (
     <View style={styles.formContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          placeholder='Repository owner name'
-          value={formik.values.ownerName}
-          onChangeText={formik.handleChange('ownerName')}
-          onBlur={formik.handleBlur('ownerName')}
-          style={ownerNameHasError ? fieldWithError : styles.textInput}
-        />
-        {ownerNameHasError && (
-          <Text style={styles.errorText}>{formik.errors.ownerName}</Text>
-        )}
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          placeholder='Repository name'
-          value={formik.values.repositoryName}
-          onChangeText={formik.handleChange('repositoryName')}
-          onBlur={formik.handleBlur('repositoryName')}
-          style={repositoryNameHasError ? fieldWithError : styles.textInput}
-        />
-        {repositoryNameHasError && (
-          <Text style={styles.errorText}>{formik.errors.repositoryName}</Text>
-        )}
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          placeholder='Rating between 0 and 100'
-          value={formik.values.rating}
-          onChangeText={formik.handleChange('rating')}
-          onBlur={formik.handleBlur('rating')}
-          inputMode='numeric'
-          style={ratingHasError ? fieldWithError : styles.textInput}
-        />
-        {ratingHasError && (
-          <Text style={styles.errorText}>{formik.errors.rating}</Text>
-        )}
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          placeholder='Review'
-          value={formik.values.review}
-          onChangeText={formik.handleChange('review')}
-          onBlur={formik.handleBlur('review')}
-          multiline
-          style={reviewHasError ? fieldWithError : styles.textInput}
-        />
-        {reviewHasError && (
-          <Text style={styles.errorText}>{formik.errors.review}</Text>
-        )}
-      </View>
+      <FormikTextInput 
+        formik={formik}
+        name="ownerName"
+        placeholder="Repository owner name"
+      />
+      <FormikTextInput 
+        formik={formik}
+        name="repositoryName"
+        placeholder="Repository name"
+      />
+      <FormikTextInput 
+        formik={formik}
+        name="rating"
+        placeholder="Rating"
+        inputMode="numeric"
+      />
+      <FormikTextInput 
+        formik={formik}
+        name="review"
+        placeholder="Review"
+      />
       <Pressable onPress={formik.handleSubmit}>
         <Text style={styles.submitButton}>Create a review</Text>
       </Pressable>
