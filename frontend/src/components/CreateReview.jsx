@@ -1,12 +1,47 @@
-import { View, TextInput, Pressable } from "react-native";
+import { View, TextInput, Pressable, StyleSheet } from "react-native";
 import Text from "./Text";
 import { useFormik } from "formik";
 import * as yup from 'yup';
+import theme from "../theme";
+
+const styles = StyleSheet.create({
+  formContainer: {
+    padding: theme.padding.itemContainer,
+    backgroundColor: theme.colors.itemBackground,
+    gap: 16,
+  },
+  inputContainer: {
+    gap: 8,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: theme.colors.textPrimary,
+    borderRadius: 8,
+  },
+  submitButton: {
+    backgroundColor: theme.colors.primary,
+    padding: 16,
+    color: theme.colors.textOnDark,
+    fontWeight: theme.fontWeights.bold,
+    textAlign: "center",
+    borderRadius: 8,
+  },
+  errorText: {
+    color: theme.colors.error,
+  }
+});
+
+const fieldWithError = [
+  styles.textInput,
+  {
+    borderColor: theme.colors.error
+  }
+]
 
 const initialValues = {
   ownerName: '',
   repositoryName: '',
-  rating: 0,
+  rating: null,
   review: '',
 };
 
@@ -39,46 +74,58 @@ const ReviewForm = ({ onSubmit }) => {
   const reviewHasError = formik.touched.review && formik.errors.review;
 
   return (
-    <View>
-      <TextInput 
-        placeholder='Repository owner name'
-        value={formik.values.ownerName}
-        onChangeText={formik.handleChange('ownerName')}
-        onBlur={formik.handleBlur('ownerName')}
-      />
-      {ownerNameHasError && (
-        <Text>{formik.errors.ownerName}</Text>
-      )}
-      <TextInput 
-        placeholder='Repository name'
-        value={formik.values.repositoryName}
-        onChangeText={formik.handleChange('repositoryName')}
-        onBlur={formik.handleBlur('repositoryName')}
-      />
-      {repositoryNameHasError && (
-        <Text>{formik.errors.repositoryName}</Text>
-      )}
-      <TextInput 
-        placeholder='Rating between 0 and 100'
-        value={formik.values.rating}
-        onChangeText={formik.handleChange('rating')}
-        onBlur={formik.handleBlur('rating')}
-        inputMode='numeric'
-      />
-      {ratingHasError && (
-        <Text>{formik.errors.rating}</Text>
-      )}
-      <TextInput 
-        placeholder='Review'
-        value={formik.values.review}
-        onChangeText={formik.handleChange('review')}
-        onBlur={formik.handleBlur('review')}
-      />
-      {reviewHasError && (
-        <Text>{formik.errors.review}</Text>
-      )}
+    <View style={styles.formContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput 
+          placeholder='Repository owner name'
+          value={formik.values.ownerName}
+          onChangeText={formik.handleChange('ownerName')}
+          onBlur={formik.handleBlur('ownerName')}
+          style={ownerNameHasError ? fieldWithError : styles.textInput}
+        />
+        {ownerNameHasError && (
+          <Text style={styles.errorText}>{formik.errors.ownerName}</Text>
+        )}
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput 
+          placeholder='Repository name'
+          value={formik.values.repositoryName}
+          onChangeText={formik.handleChange('repositoryName')}
+          onBlur={formik.handleBlur('repositoryName')}
+          style={repositoryNameHasError ? fieldWithError : styles.textInput}
+        />
+        {repositoryNameHasError && (
+          <Text style={styles.errorText}>{formik.errors.repositoryName}</Text>
+        )}
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput 
+          placeholder='Rating between 0 and 100'
+          value={formik.values.rating}
+          onChangeText={formik.handleChange('rating')}
+          onBlur={formik.handleBlur('rating')}
+          inputMode='numeric'
+          style={ratingHasError ? fieldWithError : styles.textInput}
+        />
+        {ratingHasError && (
+          <Text style={styles.errorText}>{formik.errors.rating}</Text>
+        )}
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput 
+          placeholder='Review'
+          value={formik.values.review}
+          onChangeText={formik.handleChange('review')}
+          onBlur={formik.handleBlur('review')}
+          style={reviewHasError ? fieldWithError : styles.textInput}
+        />
+        {reviewHasError && (
+          <Text style={styles.errorText}>{formik.errors.review}</Text>
+        )}
+      </View>
       <Pressable onPress={formik.handleSubmit}>
-        <Text>Create a review</Text>
+        <Text style={styles.submitButton}>Create a review</Text>
       </Pressable>
     </View>
   );
