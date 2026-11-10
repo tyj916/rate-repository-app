@@ -1,4 +1,4 @@
-import { Pressable, View, StyleSheet } from "react-native";
+import { Pressable, View, StyleSheet, FlatList } from "react-native";
 import Text from "./Text";
 import { useParams } from "react-router-native";
 import * as Linking from 'expo-linking'
@@ -21,7 +21,30 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderRadius: 4,
   },
+  reviewItemContainer: {
+    padding: theme.padding.itemContainer,
+    backgroundColor: theme.colors.itemBackground,
+  }
 });
+
+const ItemSeparator = () => {
+  return <View style={{ height: 10 }}></View>
+}
+
+const ReviewItem = ({ review }) => {
+  return (
+    <View style={styles.reviewItemContainer}>
+      <View>
+        <Text>{review.rating}</Text>
+      </View>
+      <View>
+        <Text>{review.user.username}</Text>
+        <Text>{review.createdAt}</Text>
+        <Text>{review.text}</Text>
+      </View>
+    </View>
+  );
+};
 
 const Repository = () => {
   const { id } = useParams();
@@ -40,8 +63,7 @@ const Repository = () => {
   }
 
   const repository = result.data.repository;
-  const reviewNodes = repository ? repository.reviews.edges.map(edge => edge.node) : [];
-  console.log(reviewNodes);
+  const reviews = repository ? repository.reviews.edges.map(edge => edge.node) : [];
 
   return (
     <View>
@@ -51,6 +73,12 @@ const Repository = () => {
           <Text style={styles.buttonText}>Open in GitHub</Text>
         </Pressable>
       </View>
+      <FlatList 
+        data={reviews}
+        renderItem={({ item }) => <ReviewItem review={item} />}
+        ItemSeparatorComponent={ItemSeparator}
+        keyExtractor={({ id }) => id}
+      />
     </View>
   );
 };
