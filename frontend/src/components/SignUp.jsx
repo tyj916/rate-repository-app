@@ -1,10 +1,41 @@
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import Text from "./Text";
+import { useFormik } from "formik";
+import FormikTextInput from "./FormikTextInput";
+import styles from "../utils/formStyles";
+
+const initialValues = {
+  username: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const SignUpForm = ({ onSubmit }) => {
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+  })
+
   return (
-    <View>
-      <Text>Sign Up Form</Text>
+    <View style={styles.formContainer}>
+      <FormikTextInput
+        formik={formik}
+        name="username" 
+        placeholder='Username'
+      />
+      <FormikTextInput
+        formik={formik}
+        name="password"
+        placeholder='Password'
+      />
+      <FormikTextInput
+        formik={formik}
+        name="confirmPassword" 
+        placeholder='Password confirmation'
+      />
+      <Pressable onPress={formik.handleSubmit}>
+        <Text style={styles.submitButton}>Sign up</Text>
+      </Pressable>
     </View>
   );
 };
