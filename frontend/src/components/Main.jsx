@@ -7,7 +7,7 @@ import theme from '../theme';
 import SignIn from './SignIn';
 import BodyMassIndexCalculator from './BmiCalculator';
 import Repository from './Repository';
-import ReviewForm from './ReviewForm';
+import CreateReview from './CreateReview';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +25,7 @@ const Main = () => {
         <Route path='/signIn' element={<SignIn />} />
         <Route path='/bmiCalculator' element={<BodyMassIndexCalculator />} />
         <Route path='/repositories/:id' element={<Repository />} />
-        <Route path='/createReview' element={<ReviewForm />} />
+        <Route path='/createReview' element={<CreateReview />} />
         <Route path='*' element={<Navigate to="/" replace />} />
       </Routes>
     </View>
