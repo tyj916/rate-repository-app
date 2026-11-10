@@ -13,3 +13,16 @@ export const REPOSITORY_FRAGMENT = gql`
     language
   }
 `;
+
+export const REVIEW_FRAGMENT = gql`
+  fragment ReviewFragment on Review {
+    id
+    text
+    rating
+    createdAt
+    user {
+      id
+      username
+    }
+  }
+`;

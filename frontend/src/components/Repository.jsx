@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderRadius: 4,
   },
-})
+});
 
 const Repository = () => {
   const { id } = useParams();
@@ -39,13 +39,15 @@ const Repository = () => {
     return <Text>Loading...</Text>
   }
 
-  const repositoryData = result.data.repository;
+  const repository = result.data.repository;
+  const reviewNodes = repository ? repository.reviews.edges.map(edge => edge.node) : [];
+  console.log(reviewNodes);
 
   return (
     <View>
-      <RepositoryItem item={repositoryData} />
+      <RepositoryItem item={repository} />
       <View style={styles.buttonContainer}>
-        <Pressable onPress={() => handleNavigate(repositoryData.url)}>
+        <Pressable onPress={() => handleNavigate(repository.url)}>
           <Text style={styles.buttonText}>Open in GitHub</Text>
         </Pressable>
       </View>
