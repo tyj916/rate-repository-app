@@ -58,6 +58,12 @@ const ItemSeparator = () => {
 }
 
 const ReviewItem = ({ review }) => {
+  const date = new Date(review.createdAt).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
   return (
     <View style={styles.reviewItemContainer}>
       <View style={styles.reviewRatingContainer}>
@@ -66,7 +72,7 @@ const ReviewItem = ({ review }) => {
       <View style={styles.reviewDetailsContainer}>
         <View>
           <Text style={styles.reviewUser}>{review.user.username}</Text>
-          <Text>{review.createdAt}</Text>
+          <Text>{date}</Text>
         </View>
         <Text>{review.text}</Text>
       </View>
