@@ -1,45 +1,11 @@
-import { View, TextInput, Pressable, StyleSheet } from "react-native";
+import { View, TextInput, Pressable } from "react-native";
 import Text from "./Text";
 import { useFormik } from "formik";
 import * as yup from 'yup';
-import theme from "../theme";
 import { useNavigate } from "react-router-native";
 import { useMutation } from "@apollo/client/react";
 import { CREATE_REVIEW } from "../graphql/mutations";
-
-const styles = StyleSheet.create({
-  formContainer: {
-    padding: theme.padding.itemContainer,
-    backgroundColor: theme.colors.itemBackground,
-    gap: 16,
-  },
-  inputContainer: {
-    gap: 8,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: theme.colors.textPrimary,
-    borderRadius: 8,
-  },
-  submitButton: {
-    backgroundColor: theme.colors.primary,
-    padding: 16,
-    color: theme.colors.textOnDark,
-    fontWeight: theme.fontWeights.bold,
-    textAlign: "center",
-    borderRadius: 8,
-  },
-  errorText: {
-    color: theme.colors.error,
-  }
-});
-
-const fieldWithError = [
-  styles.textInput,
-  {
-    borderColor: theme.colors.error
-  }
-]
+import styles, { fieldWithError } from "../utils/formStyles";
 
 const initialValues = {
   ownerName: '',
