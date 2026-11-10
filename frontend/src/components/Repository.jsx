@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   reviewDetailsContainer: {
-    gap: 8,
+    gap: 4,
     flexShrink: 1,
   },
   reviewUser: {
