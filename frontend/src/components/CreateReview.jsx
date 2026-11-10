@@ -118,6 +118,7 @@ const ReviewForm = ({ onSubmit }) => {
           value={formik.values.review}
           onChangeText={formik.handleChange('review')}
           onBlur={formik.handleBlur('review')}
+          multiline
           style={reviewHasError ? fieldWithError : styles.textInput}
         />
         {reviewHasError && (
