@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { useMutation } from "@apollo/client/react";
 import { CREATE_USER } from "../graphql/mutations";
 import useSignIn from "../hooks/useSignIn";
+import { useNavigate } from "react-router-native";
 
 const initialValues = {
   username: "",
@@ -66,6 +67,8 @@ const SignUpForm = ({ onSubmit }) => {
 
 const SignUp = () => {
   const [signUp] = useMutation(CREATE_USER);
+  const [signIn] = useSignIn();
+  const navigate = useNavigate();
 
   const handleSignUp = async ({ username, password, passwordConfirmation }) => {
     try {
@@ -77,8 +80,18 @@ const SignUp = () => {
           } 
         }
       });
+
+      if (!data) {
+        throw new Error("Failed to create user");
+      }
   
-      console.log(data);
+      const signInSuccess = await signIn({ username, password });
+      
+      if (!signInSuccess) {
+        throw new Error("Failed to login user");
+      }
+      
+      navigate('/');
     } catch (e) {
       console.error(e);
     }
