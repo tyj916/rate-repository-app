@@ -24,6 +24,28 @@ const styles = StyleSheet.create({
   reviewItemContainer: {
     padding: theme.padding.itemContainer,
     backgroundColor: theme.colors.itemBackground,
+    flexDirection: 'row',
+    gap: 16,
+  },
+  reviewRatingContainer: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    borderWidth: 3,
+    borderColor: theme.colors.primary,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  reviewRating: {
+    fontSize: theme.fontSizes.subheading,
+    fontWeight: theme.fontWeights.bold,
+    color: theme.colors.primary,
+  },
+  reviewUser: {
+    fontWeight: theme.fontWeights.bold,
+  },
+  reviewTime: {
+    color: theme.colors.textSecondary,
   }
 });
 
@@ -34,12 +56,14 @@ const ItemSeparator = () => {
 const ReviewItem = ({ review }) => {
   return (
     <View style={styles.reviewItemContainer}>
-      <View>
-        <Text>{review.rating}</Text>
+      <View style={styles.reviewRatingContainer}>
+        <Text style={styles.reviewRating}>{review.rating}</Text>
       </View>
-      <View>
-        <Text>{review.user.username}</Text>
-        <Text>{review.createdAt}</Text>
+      <View style={{ gap: 7 }}>
+        <View>
+          <Text style={styles.reviewUser}>{review.user.username}</Text>
+          <Text>{review.createdAt}</Text>
+        </View>
         <Text>{review.text}</Text>
       </View>
     </View>
