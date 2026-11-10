@@ -3,6 +3,9 @@ import Text from "./Text";
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import theme from "../theme";
+import { useNavigate } from "react-router-native";
+import { useMutation } from "@apollo/client/react";
+import { CREATE_REVIEW } from "../graphql/mutations";
 
 const styles = StyleSheet.create({
   formContainer: {
@@ -133,11 +136,29 @@ const ReviewForm = ({ onSubmit }) => {
 };
 
 const CreateReview = () => {
-  const onSubmit = values => {
-    console.log(values.ownerName);
-    console.log(values.repositoryName);
-    console.log(values.rating);
-    console.log(values.review);
+  const navigate = useNavigate();
+  const [mutation, result] = useMutation(CREATE_REVIEW);
+
+  const createReview = async (review) => {
+    try {
+      const { data } = await mutation({
+        variables: { review }
+      });
+  
+      return data;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onSubmit = async ({ ownerName, repositoryName, rating, review }) => {
+    const data = await createReview({ 
+      ownerName, 
+      repositoryName, 
+      rating: parseInt(rating), 
+      text: review 
+    });
+    console.log(data);
   };
   
   return <ReviewForm onSubmit={onSubmit} />
