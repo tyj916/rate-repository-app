@@ -6,6 +6,7 @@ import AppBar from './AppBar';
 import theme from '../theme';
 import SignIn from './SignIn';
 import BodyMassIndexCalculator from './BmiCalculator';
+import Repository from './Repository';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,9 +21,10 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path='/' element={<RepositoryList />} />
-        <Route path='*' element={<Navigate to="/" replace />} />
         <Route path='/signIn' element={<SignIn />} />
         <Route path='/bmiCalculator' element={<BodyMassIndexCalculator />} />
+        <Route path='/repositories/:id' element={<Repository />} />
+        <Route path='*' element={<Navigate to="/" replace />} />
       </Routes>
     </View>
   );
