@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
     fontWeight: theme.fontWeights.bold,
     color: theme.colors.primary,
   },
+  reviewDetailsContainer: {
+    gap: 8,
+    flexShrink: 1,
+  },
   reviewUser: {
     fontWeight: theme.fontWeights.bold,
   },
@@ -59,7 +63,7 @@ const ReviewItem = ({ review }) => {
       <View style={styles.reviewRatingContainer}>
         <Text style={styles.reviewRating}>{review.rating}</Text>
       </View>
-      <View style={{ gap: 7 }}>
+      <View style={styles.reviewDetailsContainer}>
         <View>
           <Text style={styles.reviewUser}>{review.user.username}</Text>
           <Text>{review.createdAt}</Text>
