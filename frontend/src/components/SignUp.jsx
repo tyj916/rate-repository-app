@@ -4,6 +4,9 @@ import { useFormik } from "formik";
 import FormikTextInput from "./FormikTextInput";
 import styles from "../utils/formStyles";
 import * as yup from 'yup';
+import { useMutation } from "@apollo/client/react";
+import { CREATE_USER } from "../graphql/mutations";
+import useSignIn from "../hooks/useSignIn";
 
 const initialValues = {
   username: "",
@@ -60,9 +63,23 @@ const SignUpForm = ({ onSubmit }) => {
 };
 
 const SignUp = () => {
-  const handleSignUp = ({ username, password }) => {
-    console.log("Username", username);
-    console.log("Password", password);
+  const [signUp] = useMutation(CREATE_USER);
+
+  const handleSignUp = async ({ username, password, passwordConfirmation }) => {
+    try {
+      const { data } = await signUp({
+        variables: { 
+          user: {
+            username,
+            password
+          } 
+        }
+      });
+  
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return <SignUpForm onSubmit={handleSignUp} />;
