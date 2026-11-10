@@ -8,6 +8,7 @@ import SignIn from './SignIn';
 import BodyMassIndexCalculator from './BmiCalculator';
 import Repository from './Repository';
 import CreateReview from './CreateReview';
+import SignUp from './SignUp';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,6 +24,7 @@ const Main = () => {
       <Routes>
         <Route path='/' element={<RepositoryList />} />
         <Route path='/signIn' element={<SignIn />} />
+        <Route path='/signUp' element={<SignUp />} />
         <Route path='/bmiCalculator' element={<BodyMassIndexCalculator />} />
         <Route path='/repositories/:id' element={<Repository />} />
         <Route path='/createReview' element={<CreateReview />} />

@@ -18,7 +18,10 @@ const AppBar = () => {
   return <View style={styles.container}>
     <ScrollView horizontal>
       <AppBarTab text="Repositories" navigateTo="/" />
-      {!me && <AppBarTab text="Sign In" navigateTo="/signIn" />}
+      {!me && <>
+        <AppBarTab text="Sign In" navigateTo="/signIn" />
+        <AppBarTab text="Sign Up" navigateTo="/signUp" />
+      </>}
       {me && <>
         <AppBarTab text="Create a review" navigateTo="/createReview" />
         <SignOut />
