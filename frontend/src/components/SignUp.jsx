@@ -3,16 +3,35 @@ import Text from "./Text";
 import { useFormik } from "formik";
 import FormikTextInput from "./FormikTextInput";
 import styles from "../utils/formStyles";
+import * as yup from 'yup';
 
 const initialValues = {
   username: "",
   password: "",
-  confirmPassword: "",
+  passwordConfirmation: "",
 };
+
+const validationSchema = yup.object().shape({
+  username: yup
+    .string()
+    .min(5, "Username minimum length 5 characters")
+    .max(30, "Username maximum length 30 characters")
+    .required("Username is a required string with a length between 5 and 30"),
+  password: yup
+    .string()
+    .min(5, "Password minimum length 5 characters")
+    .max(50, "Password maximum length 50 characters")
+    .required("Password is a required string with a length between 5 and 50"),
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref('password'), null], "Password does not match")
+    .required("Password confirmation is required")
+});
 
 const SignUpForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
+    validationSchema,
     onSubmit,
   })
 
@@ -30,7 +49,7 @@ const SignUpForm = ({ onSubmit }) => {
       />
       <FormikTextInput
         formik={formik}
-        name="confirmPassword" 
+        name="passwordConfirmation" 
         placeholder='Password confirmation'
       />
       <Pressable onPress={formik.handleSubmit}>
