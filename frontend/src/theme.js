@@ -26,6 +26,10 @@ const theme = {
     normal: '400',
     bold: '700',
   },
+  padding: {
+    pressable: 16,
+    itemContainer: 16,
+  }
 };
 
 export default theme;
