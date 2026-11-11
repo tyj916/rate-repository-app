@@ -3,6 +3,7 @@ import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import Text from './Text';
+import { useState } from 'react';
 
 const styles = StyleSheet.create({
   separator: {
@@ -37,7 +38,9 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories, loading } = useRepositories();
+  const [orderBy, setOrderBy] = useState('CREATED_AT');
+  const [orderDirection, setOrderDirection] = useState('DESC');
+  const { repositories, loading } = useRepositories(orderBy, orderDirection);
 
   if (loading) {
     return <Text>Loading...</Text>
