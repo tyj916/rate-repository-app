@@ -22,6 +22,7 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
       placeholder='Search'
       value={searchValue}
       onChangeText={setSearchValue}
+      style={{ boxShadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.15)' }}
     />
   );
 };
@@ -66,7 +67,7 @@ export const RepositoryListContainer = ({
           <RepositoryItem item={item} />
         </Pressable>
       )}
-      ListHeaderComponent={<View>
+      ListHeaderComponent={<View style={{ paddingHorizontal: 16, paddingTop: 16 }}>
         <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
         <OrderSelector order={order} changeOrder={changeOrder} />
       </View>}
