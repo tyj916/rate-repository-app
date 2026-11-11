@@ -20,6 +20,7 @@ const OrderSelector = ({ order, changeOrder }) => {
       selectedValue={order}
       onValueChange={(value) => changeOrder(value)}
     >
+      <Picker.Item label='Select an item...' enabled={false} />
       <Picker.Item label='Latest repositories' value="latest" />
       <Picker.Item label='Highest rated repositories' value="highestRated" />
       <Picker.Item label='Lowest rated repositories' value="lowestRated" />
