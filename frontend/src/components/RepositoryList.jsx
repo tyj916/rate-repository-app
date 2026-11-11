@@ -5,6 +5,7 @@ import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import Text from './Text';
 import { useState } from 'react';
+import { Searchbar } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   separator: {
@@ -13,6 +14,16 @@ const styles = StyleSheet.create({
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
+
+const SearchBar = ({ searchKeyword, setSearchKeyword }) => {
+  return (
+    <Searchbar
+      placeholder='Search'
+      value={searchKeyword}
+      onChangeText={setSearchKeyword}
+    />
+  );
+};
 
 const OrderSelector = ({ order, changeOrder }) => {
   return (
@@ -28,7 +39,13 @@ const OrderSelector = ({ order, changeOrder }) => {
   );
 };
 
-export const RepositoryListContainer = ({ repositories, order, changeOrder }) => {
+export const RepositoryListContainer = ({ 
+  repositories, 
+  order, 
+  changeOrder,
+  searchKeyword,
+  setSearchKeyword,
+}) => {
   const navigate = useNavigate();
 
   const repositoryNodes = repositories
@@ -48,7 +65,10 @@ export const RepositoryListContainer = ({ repositories, order, changeOrder }) =>
           <RepositoryItem item={item} />
         </Pressable>
       )}
-      ListHeaderComponent={<OrderSelector order={order} changeOrder={changeOrder} />}
+      ListHeaderComponent={<View>
+        <SearchBar searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
+        <OrderSelector order={order} changeOrder={changeOrder} />
+      </View>}
     />
   );
 };
@@ -87,6 +107,8 @@ const RepositoryList = () => {
     repositories={repositories} 
     order={order}
     changeOrder={changeOrder}
+    searchKeyword={searchKeyword}
+    setSearchKeyword={setSearchKeyword}
   />;
 };
 
