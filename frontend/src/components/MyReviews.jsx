@@ -31,20 +31,8 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={{ height: 10 }} />;
 
-const ReviewItemContainer = ({ item }) => {
-  const [mutate] = useMutation(DELETE_REVIEW);
+const ReviewItemContainer = ({ item, deleteReview }) => {
   const navigate = useNavigate();
-
-  const deleteReview = async () => {
-    try {
-      const result = await mutate({
-        variables: { deleteReviewId: item.id },
-      });
-      console.log(result);
-    } catch (e) { 
-      console.error(e);
-    }
-  };
 
   const handleDelete = () => {
     Alert.alert("Delete review", "Are you sure you want to delete this review?", [
@@ -53,7 +41,7 @@ const ReviewItemContainer = ({ item }) => {
       },
       {
         text: 'Delete',
-        onPress: deleteReview,
+        onPress: () => deleteReview(item.id),
       }
     ]);
   };
@@ -80,7 +68,20 @@ const ReviewItemContainer = ({ item }) => {
 };
 
 const MyReviews = () => {
-  const { me, loading } = useMe({ includeReviews: true });
+  const { me, loading, refetch } = useMe({ includeReviews: true });
+  const [mutate] = useMutation(DELETE_REVIEW);
+
+  const deleteReview = async (deleteReviewId) => {
+    try {
+      await mutate({
+        variables: { deleteReviewId },
+      });
+
+      refetch();
+    } catch (e) { 
+      console.error(e);
+    }
+  };
 
   if (loading) {
     return <Text>Loading...</Text>
@@ -91,7 +92,7 @@ const MyReviews = () => {
   return (
     <FlatList 
       data={reviews}
-      renderItem={({item}) => <ReviewItemContainer item={item} />}
+      renderItem={({item}) => <ReviewItemContainer item={item} deleteReview={deleteReview} />}
       ItemSeparatorComponent={<ItemSeparator />}
     />
   );

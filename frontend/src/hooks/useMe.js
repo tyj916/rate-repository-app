@@ -12,6 +12,7 @@ const useMe = ({ includeReviews = false } = {}) => {
     me: result.data?.me,
     error: result.error,
     loading: result.loading,
+    refetch: result.refetch,
   }
 };
 
