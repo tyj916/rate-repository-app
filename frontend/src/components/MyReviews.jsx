@@ -1,9 +1,11 @@
-import { View, FlatList, Pressable, StyleSheet } from "react-native";
+import { View, FlatList, Pressable, StyleSheet, Alert } from "react-native";
 import Text from "./Text";
 import useMe from "../hooks/useMe";
 import ReviewItem from "./ReviewItem";
 import theme from "../theme";
 import { useNavigate } from "react-router-native";
+import { useMutation } from "@apollo/client/react";
+import { DELETE_REVIEW } from "../graphql/mutations";
 
 const styles = StyleSheet.create({
   reviewButtonsContainer: {
@@ -30,7 +32,31 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={{ height: 10 }} />;
 
 const ReviewItemContainer = ({ item }) => {
+  const [mutate] = useMutation(DELETE_REVIEW);
   const navigate = useNavigate();
+
+  const deleteReview = async () => {
+    try {
+      const result = await mutate({
+        variables: { deleteReviewId: item.id },
+      });
+      console.log(result);
+    } catch (e) { 
+      console.error(e);
+    }
+  };
+
+  const handleDelete = () => {
+    Alert.alert("Delete review", "Are you sure you want to delete this review?", [
+      {
+        text: 'Cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: deleteReview,
+      }
+    ]);
+  };
 
   return (
     <View>
@@ -42,7 +68,10 @@ const ReviewItemContainer = ({ item }) => {
         >
           <Text style={styles.reviewButtonText}>View repository</Text>
         </Pressable>
-        <Pressable style={[styles.reviewButton, { backgroundColor: theme.colors.error }]}>
+        <Pressable 
+          style={[styles.reviewButton, { backgroundColor: theme.colors.error }]}
+          onPress={handleDelete}
+        >
           <Text style={styles.reviewButtonText}>Delete review</Text>
         </Pressable>
       </View>
