@@ -56,6 +56,7 @@ export const ME = gql`
           node {
             ...ReviewFragment
             repository {
+              id
               fullName
             }
           }

@@ -3,6 +3,7 @@ import Text from "./Text";
 import useMe from "../hooks/useMe";
 import ReviewItem from "./ReviewItem";
 import theme from "../theme";
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
   reviewButtonsContainer: {
@@ -29,11 +30,16 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={{ height: 10 }} />;
 
 const ReviewItemContainer = ({ item }) => {
+  const navigate = useNavigate();
+
   return (
     <View>
       <ReviewItem review={item} />
       <View style={styles.reviewButtonsContainer}>
-        <Pressable style={styles.reviewButton}>
+        <Pressable 
+          onPress={() => navigate(`/repositories/${item.repository.id}`)}
+          style={styles.reviewButton}
+        >
           <Text style={styles.reviewButtonText}>View repository</Text>
         </Pressable>
         <Pressable style={[styles.reviewButton, { backgroundColor: theme.colors.error }]}>
