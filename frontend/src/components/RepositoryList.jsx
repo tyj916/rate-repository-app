@@ -110,7 +110,7 @@ const RepositoryList = () => {
     };
   };
 
-  if (loading) {
+  if (loading && !repositories) {
     return <Text>Loading...</Text>
   }
 

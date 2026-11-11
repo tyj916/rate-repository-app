@@ -57,7 +57,7 @@ const Repository = () => {
     fetchPolicy: 'cache-and-network',
   });
   
-  if (loading) {
+  if (loading && !data) {
     return <Text>Loading...</Text>
   }
   
