@@ -14,30 +14,12 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const OrderSelector = ({
-  orderBy,
-  setOrderBy,
-  orderDirection,
-  setOrderDirection,
-}) => {
+const OrderSelector = ({ changeOrder }) => {
   const [value, setValue] = useState();
 
   const handleChange = (value) => {
     setValue(value);
-
-    switch (value) {
-      case "latest":
-        setOrderBy("CREATED_AT");
-        setOrderDirection("DESC");
-        break;
-      case "highestRated":
-        setOrderBy("RATING_AVERAGE");
-        setOrderDirection("DESC");
-        break;
-      case "lowestRated":
-        setOrderBy("RATING_AVERAGE");
-        setOrderDirection("ASC");
-    };
+    changeOrder(value);
   };
 
   return (
@@ -52,13 +34,7 @@ const OrderSelector = ({
   );
 };
 
-export const RepositoryListContainer = ({ 
-  repositories,
-  orderBy,
-  setOrderBy,
-  orderDirection,
-  setOrderDirection,
-}) => {
+export const RepositoryListContainer = ({ repositories, changeOrder }) => {
   const navigate = useNavigate();
 
   const repositoryNodes = repositories
@@ -78,12 +54,7 @@ export const RepositoryListContainer = ({
           <RepositoryItem item={item} />
         </Pressable>
       )}
-      ListHeaderComponent={<OrderSelector  
-        orderBy={orderBy}
-        setOrderBy={setOrderBy}
-        orderDirection={orderDirection}
-        setOrderDirection={setOrderDirection}
-      />}
+      ListHeaderComponent={<OrderSelector changeOrder={changeOrder} />}
     />
   );
 };
@@ -93,16 +64,30 @@ const RepositoryList = () => {
   const [orderDirection, setOrderDirection] = useState('DESC');
   const { repositories, loading } = useRepositories(orderBy, orderDirection);
 
+  const changeOrder = (value) => {
+    switch (value) {
+      case "latest":
+        setOrderBy("CREATED_AT");
+        setOrderDirection("DESC");
+        break;
+      case "highestRated":
+        setOrderBy("RATING_AVERAGE");
+        setOrderDirection("DESC");
+        break;
+      case "lowestRated":
+        setOrderBy("RATING_AVERAGE");
+        setOrderDirection("ASC");
+        break;
+    };
+  };
+
   if (loading) {
     return <Text>Loading...</Text>
   }
 
   return <RepositoryListContainer 
     repositories={repositories} 
-    orderBy={orderBy}
-    setOrderBy={setOrderBy}
-    orderDirection={orderDirection}
-    setOrderDirection={setOrderDirection}
+    changeOrder={changeOrder}
   />;
 };
 
