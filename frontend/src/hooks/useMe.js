@@ -5,7 +5,8 @@ const useMe = ({ includeReviews = false } = {}) => {
   const result = useQuery(ME, {
     variables: {
       includeReviews,
-    }
+    },
+    fetchPolicy: 'cache-and-network',
   });
 
   return {
