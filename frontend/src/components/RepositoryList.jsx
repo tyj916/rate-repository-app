@@ -57,7 +57,8 @@ const RepositoryList = () => {
   const [order, setOrder] = useState('latest');
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [orderDirection, setOrderDirection] = useState('DESC');
-  const { repositories, loading } = useRepositories(orderBy, orderDirection);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const { repositories, loading } = useRepositories(orderBy, orderDirection, searchKeyword);
 
   const changeOrder = (value) => {
     setOrder(value);
