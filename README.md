@@ -9,4 +9,4 @@ You can try the app on your phone by scanning the following QR code with Expo Go
 
 If the QR doesn't work, paste the URL below within an emulator:
 
-exp://u.expo.dev/f9dd4a4a-ac04-421c-a202-862e4b772f11/group/e91599f5-c408-4001-9fea-85e3d8e58e30
+exp://u.expo.dev/f9dd4a4a-ac04-421c-a202-862e4b772f11/group/3492d8c9-7862-47e6-8a52-7b3dabff3c19
