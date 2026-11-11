@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
 })
 
 const ReviewItem = ({ review }) => {
+  const title = review.user?.username ?? review.repository?.fullName;
+
   const date = new Date(review.createdAt).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -49,7 +51,7 @@ const ReviewItem = ({ review }) => {
       </View>
       <View style={styles.reviewDetailsContainer}>
         <View>
-          <Text style={styles.reviewUser}>{review.user.username}</Text>
+          <Text style={styles.reviewUser}>{title}</Text>
           <Text style={styles.reviewTime}>{date}</Text>
         </View>
         <Text>{review.text}</Text>

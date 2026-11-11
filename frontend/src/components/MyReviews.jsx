@@ -12,12 +12,7 @@ const MyReviews = () => {
     return <Text>Loading...</Text>
   }
 
-  const reviews = me.reviews.edges.map(edge => ({
-    ...edge.node,
-    user: {
-      username: me.username,
-    }
-  }));
+  const reviews = me.reviews.edges.map(edge => edge.node);
 
   return (
     <FlatList 
