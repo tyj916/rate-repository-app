@@ -43,6 +43,7 @@ const OrderSelector = ({ order, changeOrder }) => {
 
 export const RepositoryListContainer = ({ 
   repositories, 
+  onEndReached,
   order, 
   changeOrder,
   searchValue,
@@ -71,6 +72,8 @@ export const RepositoryListContainer = ({
         <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
         <OrderSelector order={order} changeOrder={changeOrder} />
       </View>}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
     />
   );
 };
@@ -108,6 +111,7 @@ const RepositoryList = () => {
 
   return <RepositoryListContainer 
     repositories={repositories} 
+    onEndReached={() => console.log('End of the list reached')}
     order={order}
     changeOrder={changeOrder}
     searchValue={searchValue}
