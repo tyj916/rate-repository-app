@@ -1,8 +1,12 @@
 import { useQuery } from "@apollo/client/react";
 import { ME } from "../graphql/queries";
 
-const useMe = () => {
-  const result = useQuery(ME);
+const useMe = (includeReviews = false) => {
+  const result = useQuery(ME, {
+    variables: {
+      includeReviews,
+    }
+  });
 
   return {
     me: result.data?.me,

@@ -20,9 +20,5 @@ export const REVIEW_FRAGMENT = gql`
     text
     rating
     createdAt
-    user {
-      id
-      username
-    }
   }
 `;

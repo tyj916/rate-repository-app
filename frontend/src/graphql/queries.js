@@ -32,6 +32,10 @@ export const GET_REPOSITORY_DETAILS = gql`
         edges {
           node {
             ...ReviewFragment
+            user {
+              id
+              username
+            }
           }
         }
       }
@@ -43,10 +47,19 @@ export const GET_REPOSITORY_DETAILS = gql`
 `
 
 export const ME = gql`
-  query {
+  query GetCurrentUser($includeReviews: Boolean = false) {
     me {
       id
       username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            ...ReviewFragment
+          }
+        }
+      }
     }
   }
+
+  ${REVIEW_FRAGMENT}
 `
