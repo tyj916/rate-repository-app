@@ -6,6 +6,7 @@ import useRepositories from '../hooks/useRepositories';
 import Text from './Text';
 import { useState } from 'react';
 import { Searchbar } from 'react-native-paper';
+import { useDebounce } from 'use-debounce';
 
 const styles = StyleSheet.create({
   separator: {
@@ -15,12 +16,12 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const SearchBar = ({ searchKeyword, setSearchKeyword }) => {
+const SearchBar = ({ searchValue, setSearchValue }) => {
   return (
     <Searchbar
       placeholder='Search'
-      value={searchKeyword}
-      onChangeText={setSearchKeyword}
+      value={searchValue}
+      onChangeText={setSearchValue}
     />
   );
 };
@@ -43,8 +44,8 @@ export const RepositoryListContainer = ({
   repositories, 
   order, 
   changeOrder,
-  searchKeyword,
-  setSearchKeyword,
+  searchValue,
+  setSearchValue,
 }) => {
   const navigate = useNavigate();
 
@@ -66,7 +67,7 @@ export const RepositoryListContainer = ({
         </Pressable>
       )}
       ListHeaderComponent={<View>
-        <SearchBar searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
+        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
         <OrderSelector order={order} changeOrder={changeOrder} />
       </View>}
     />
@@ -77,7 +78,8 @@ const RepositoryList = () => {
   const [order, setOrder] = useState('latest');
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [orderDirection, setOrderDirection] = useState('DESC');
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const [searchKeyword] = useDebounce(searchValue, 500);
   const { repositories, loading } = useRepositories(orderBy, orderDirection, searchKeyword);
 
   const changeOrder = (value) => {
@@ -107,8 +109,8 @@ const RepositoryList = () => {
     repositories={repositories} 
     order={order}
     changeOrder={changeOrder}
-    searchKeyword={searchKeyword}
-    setSearchKeyword={setSearchKeyword}
+    searchValue={searchValue}
+    setSearchValue={setSearchValue}
   />;
 };
 
