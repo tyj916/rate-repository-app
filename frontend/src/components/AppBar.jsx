@@ -24,6 +24,7 @@ const AppBar = () => {
       </>}
       {me && <>
         <AppBarTab text="Create a review" navigateTo="/createReview" />
+        <AppBarTab text="My reviews" navigateTo="/myReviews" />
         <SignOut />
       </>}
       <AppBarTab text="BMI" navigateTo="/bmiCalculator" />
