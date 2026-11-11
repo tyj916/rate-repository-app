@@ -14,18 +14,11 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const OrderSelector = ({ changeOrder }) => {
-  const [value, setValue] = useState();
-
-  const handleChange = (value) => {
-    setValue(value);
-    changeOrder(value);
-  };
-
+const OrderSelector = ({ order, changeOrder }) => {
   return (
     <Picker
-      selectedValue={value}
-      onValueChange={handleChange}
+      selectedValue={order}
+      onValueChange={(value) => changeOrder(value)}
     >
       <Picker.Item label='Latest repositories' value="latest" />
       <Picker.Item label='Highest rated repositories' value="highestRated" />
@@ -34,7 +27,7 @@ const OrderSelector = ({ changeOrder }) => {
   );
 };
 
-export const RepositoryListContainer = ({ repositories, changeOrder }) => {
+export const RepositoryListContainer = ({ repositories, order, changeOrder }) => {
   const navigate = useNavigate();
 
   const repositoryNodes = repositories
@@ -54,17 +47,20 @@ export const RepositoryListContainer = ({ repositories, changeOrder }) => {
           <RepositoryItem item={item} />
         </Pressable>
       )}
-      ListHeaderComponent={<OrderSelector changeOrder={changeOrder} />}
+      ListHeaderComponent={<OrderSelector order={order} changeOrder={changeOrder} />}
     />
   );
 };
 
 const RepositoryList = () => {
+  const [order, setOrder] = useState('latest');
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [orderDirection, setOrderDirection] = useState('DESC');
   const { repositories, loading } = useRepositories(orderBy, orderDirection);
 
   const changeOrder = (value) => {
+    setOrder(value);
+
     switch (value) {
       case "latest":
         setOrderBy("CREATED_AT");
@@ -87,6 +83,7 @@ const RepositoryList = () => {
 
   return <RepositoryListContainer 
     repositories={repositories} 
+    order={order}
     changeOrder={changeOrder}
   />;
 };
