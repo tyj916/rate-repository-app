@@ -47,18 +47,37 @@ const RepositoryView = ({ repository }) => {
 
 const Repository = () => {
   const { id } = useParams();
-
-  const result = useQuery(GET_REPOSITORY_DETAILS, {
-    variables: { repositoryId: id },
-    fetchPolicy: 'cache-and-network',
-  });
-
-  if (result.loading) {
-    return <Text>Loading...</Text>
+  const variables = {
+    repositoryId: id,
+    first: 4,
   }
 
-  const repository = result.data.repository;
+  const { data, loading, fetchMore } = useQuery(GET_REPOSITORY_DETAILS, {
+    variables,
+    fetchPolicy: 'cache-and-network',
+  });
+  
+  if (loading) {
+    return <Text>Loading...</Text>
+  }
+  
+  const repository = data?.repository;
   const reviews = repository ? repository.reviews.edges.map(edge => edge.node) : [];
+  
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repository.reviews.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
 
   return (
     <FlatList 
@@ -68,6 +87,8 @@ const Repository = () => {
       ListHeaderComponent={() => <RepositoryView repository={repository} />}
       ListHeaderComponentStyle={{ marginBottom: 10 }}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={handleFetchMore}
+      onEndReachedThreshold={0.2}
     />
   );
 };

@@ -32,11 +32,18 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_REPOSITORY_DETAILS = gql`
-  query GetRepositoryDetails($repositoryId: ID!) {
+  query GetRepositoryDetails(
+    $repositoryId: ID!
+    $first: Int,
+    $after: String,
+  ) {
     repository(id: $repositoryId) {
       ...RepositoryFragment
       url
-      reviews {
+      reviews(
+        first: $first
+        after: $after
+      ) {
         edges {
           node {
             ...ReviewFragment
@@ -45,6 +52,10 @@ export const GET_REPOSITORY_DETAILS = gql`
               username
             }
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
     }
