@@ -1,6 +1,9 @@
-import { View } from "react-native";
+import { View, FlatList } from "react-native";
 import Text from "./Text";
 import useMe from "../hooks/useMe";
+import ReviewItem from "./ReviewItem";
+
+const ItemSeparator = () => <View style={{ height: 10 }} />;
 
 const MyReviews = () => {
   const { me, loading } = useMe({ includeReviews: true });
@@ -9,14 +12,19 @@ const MyReviews = () => {
     return <Text>Loading...</Text>
   }
 
-  const reviews = me.reviews.edges.map(edge => edge.node);
-
-  console.log(reviews);
+  const reviews = me.reviews.edges.map(edge => ({
+    ...edge.node,
+    user: {
+      username: me.username,
+    }
+  }));
 
   return (
-    <View>
-      <Text>My Reviews</Text>
-    </View>
+    <FlatList 
+      data={reviews}
+      renderItem={({item}) => <ReviewItem review={item} />}
+      ItemSeparatorComponent={<ItemSeparator />}
+    />
   );
 };
 
