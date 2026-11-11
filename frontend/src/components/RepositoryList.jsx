@@ -84,7 +84,12 @@ const RepositoryList = () => {
   const [orderDirection, setOrderDirection] = useState('DESC');
   const [searchValue, setSearchValue] = useState('');
   const [searchKeyword] = useDebounce(searchValue, 500);
-  const { repositories, loading } = useRepositories(orderBy, orderDirection, searchKeyword);
+  const { repositories, loading, fetchMore } = useRepositories({ 
+    orderBy, 
+    orderDirection, 
+    searchKeyword,
+    first: 5,
+  });
 
   const changeOrder = (value) => {
     setOrder(value);
@@ -111,7 +116,7 @@ const RepositoryList = () => {
 
   return <RepositoryListContainer 
     repositories={repositories} 
-    onEndReached={() => console.log('End of the list reached')}
+    onEndReached={fetchMore}
     order={order}
     changeOrder={changeOrder}
     searchValue={searchValue}
